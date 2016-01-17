@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<!-- CSP support mode (required for Windows Universal apps): https://docs.angularjs.org/api/ng/directive/ngCsp -->
+<html lang="es" ng-app="app" ng-csp>
+<head>
+    <meta charset="utf-8" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- JS dependencies (order matters!) -->
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/onsen/js/onsenui.js"></script>
+
+    <!-- CSS dependencies -->
+    <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
+    <link rel="stylesheet" href="lib/onsen/css/onsen-css-components-blue-basic-theme.css" />
+
+    <!-- CSP support mode (required for Windows Universal apps) -->
+    <link rel="stylesheet" href="lib/angular/angular-csp.css" />
+
+
+    <!-- --------------- App init --------------- -->
+
+    <title>Onsen UI Sliding Menu</title>
+
+    <script>
+        angular.module('app', ['onsen']);
+    </script>
+
+    <style>
+
+        .medicine_last_bought_list_info {
+            font-size: 14px;
+            opacity: 0.4;
+            margin-bottom: 6px;
+        }
+
+        .medicine_name_list_info {
+            font-weight: 500;
+            line-height: 16px;
+            font-size: 15px;
+            margin-bottom: 6px;
+            margin-top: 6px;
+        }
+
+        .page--menu-page__background {
+            background-color: #333;
+        }
+
+        .page--menu-page__content {
+            color: white;
+        }
+
+        .menu-close,
+        .menu-close > .toolbar-button {
+            color: #999;
+        }
+
+        .menu-list,
+        .menu-item:first-child,
+        .menu-item:last-child,
+        .menu-item {
+            background-color: transparent;
+            background-image: none !important;
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .menu-item {
+            padding: 0 0 0 20px;
+            line-height: 52px;
+            height: 52px;
+            text-shadow: rgba(0, 0, 0, 0.4) 0px 1px 0px;
+        }
+
+            .menu-item:active {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+
+        .menu-notification {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 14px;
+            height: 16px;
+            line-height: 16px;
+            min-width: 16px;
+            font-weight: 600;
+        }
+
+        .bottom-menu-list,
+        .bottom-menu-item:first-child,
+        .bottom-menu-item:last-child,
+        .bottom-menu-item {
+            border-color: #393939;
+            background-color: transparent;
+            background-image: none !important;
+            color: #ccc;
+        }
+
+            .bottom-menu-item:active {
+                background-color: rgba(255, 255, 255, 0.1);
+            }
+    </style>
+
+</head>
+
+<body>
+    <!-- Cordova reference -->
+    <script src="cordova.js"></script>
+    <script src="scripts/index.js"></script>
+    <!-- -->
+
+    <ons-sliding-menu menu-page="menu.html" main-page="page3.html" side="left"
+                      var="menu" type="reveal" max-slide-distance="260px" swipeable="true">
+    </ons-sliding-menu>
+
+    <ons-template id="menu.html">
+        <ons-page modifier="menu-page">
+            <ons-toolbar modifier="transparent"></ons-toolbar>
+
+            <ons-list class="menu-list">
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('page3.html', {closeMenu: true})">
+                    <ons-icon icon="ion-ios-barcode"></ons-icon>
+                    Código de barras
+                </ons-list-item>
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+                    <ons-icon icon="ion-ios-list"></ons-icon>
+                    Medicamentos
+                </ons-list-item>
+
+                <ons-list-item class="menu-item" ng-click="menu.setMainPage('new_medicine_form.html', {closeMenu: true})">
+                    <ons-icon icon="fa-plus"></ons-icon>
+                    Nuevo medicamento
+                </ons-list-item>
+
+            </ons-list>
+
+            <br>
+
+            <ons-list class="bottom-menu-list">
+                <ons-list-item class="bottom-menu-item" ng-click="menu.setMainPage('page2.html', {closeMenu: true})">
+                    Configuración
+                    <div class="notification menu-notification">3</div>
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="menu.setMainPage('page1.html', {closeMenu: true})">
+                    Ayuda
+                </ons-list-item>
+
+                <ons-list-item class="bottom-menu-item" ng-click="menu.setMainPage('page2.html', {closeMenu: true})">
+                    Sugerencias
+                </ons-list-item>
+            </ons-list>
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="page1.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Medicamentos</div>
+            </ons-toolbar>
+
+            <ons-row style="text-align: center;">
+                <ons-col>
+                    <ons-list>
+                        <ons-list-item modifier="chevron" ng-click="menu.setMainPage('medicine_info.html', {closeMenu: true})">
+                            <div class="medicine_name_list_info">
+                                Monoprost
+                            </div>
+                            <div class="medicine_last_bought_list_info">
+                                <i class="fa fa-clock-o"></i> Faltan 26 dias
+                            </div>
+                        </ons-list-item>
+                        <ons-list-item modifier="chevron">Ibuprofeno</ons-list-item>
+                    </ons-list>
+                </ons-col>
+            </ons-row>
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="page2.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Nuevo medicamento</div>
+            </ons-toolbar>
+            
+            <ons-row style="text-align: center;">
+                <ons-col>
+                    <form>
+                        <ons-row style="margin-top: 100px; text-align: center;">
+                            <ons-col>
+                            <label>Introduzca el número del código de barras</label>
+                                </ons-col>
+                        </ons-row>
+                        <ons-row style="margin-top: 100px; text-align: center;">
+                            <ons-col>
+                                <input type="number" name="input" required ng-trim="true">
+                            </ons-col>
+                        </ons-row>
+                        <ons-row style="margin-top: 100px; text-align: center;">
+                            <ons-col>
+                            <ons-button modifier="light" ng-click="menu.setMainPage('page2.html', {closeMenu: true})">Validar
+                            </ons-button>
+                                </ons-col>
+                        </ons-row>
+                    </form>
+                </ons-col>
+            </ons-row>
+
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="page3.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Codigo de barras</div>
+            </ons-toolbar>
+
+            <ons-row style="text-align: center;">
+                <ons-col>
+                    <form>
+                        <ons-row style="margin-top: 100px; text-align: center;">
+                            <ons-col>
+                                <img src="resources/images/barcode.gif"/>
+                            </ons-col>
+                        </ons-row>
+                    </form>
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col>
+
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col>
+
+                </ons-col>
+            </ons-row>
+            <ons-row>
+                <ons-col>
+
+                </ons-col>
+            </ons-row>
+            <ons-row style="text-align: center;" align="bottom">
+                <ons-col>
+
+                </ons-col>
+                <ons-col>
+
+                </ons-col>
+                <ons-col>
+
+                </ons-col>
+                <ons-col>
+                    <ons-button modifier="light" ng-click="menu.toggle()">
+                        <ons-icon
+                                icon="ion-edit"
+                                size="40px"
+                                fixed-width="false"
+                                style="color: blue">
+                        </ons-icon>
+                    </ons-button>
+                </ons-col>
+            </ons-row>
+
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="new_medicine_form.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Nuevo medicamento</div>
+            </ons-toolbar>
+
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <label>Nombre del medicamento</label>
+                </ons-col>
+                <ons-col>
+                    <input type="text" id="input_medicine_name" name="input_medicine_name" required ng-trim="true">
+                </ons-col>
+            </ons-row>
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <label>Frecuencia de compra (dias)</label>
+                </ons-col>
+                <ons-col>
+                    <input type="number" id="input_medicine_buy_freq" name="input_medicine_buy_freq" required ng-trim="true">
+                </ons-col>
+            </ons-row>
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <label>Ultima vez comprado</label>
+                </ons-col>
+                <ons-col>
+                    <input type="date" id="input_medicine_last_time_bought" name="input_medicine_last_time_bought" required ng-trim="true">
+                </ons-col>
+            </ons-row>
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <ons-button modifier="large--cta" onclick="createNewMedicine()">Valida
+                    </ons-button>
+                </ons-col>
+            </ons-row>
+
+        </ons-page>
+    </ons-template>
+
+    <ons-template id="medicine_info.html">
+        <ons-page>
+            <ons-toolbar>
+                <div class="left">
+                    <ons-toolbar-button ng-click="menu.toggle()">
+                        <ons-icon icon="ion-navicon" size="28px" fixed-width="false"></ons-icon>
+                    </ons-toolbar-button>
+                </div>
+                <div class="center">Monoprost</div>
+            </ons-toolbar>
+
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <label>Frecuencia de compra</label>
+                </ons-col>
+                <ons-col>
+                    <label>30 dias</label>
+                </ons-col>
+            </ons-row>
+            <ons-row style="margin-top: 100px; text-align: center;">
+                <ons-col>
+                    <label>Ultima vez comprado</label>
+                </ons-col>
+                <ons-col>
+                    <label>11 de Enero del 2016</label>
+                </ons-col>
+            </ons-row>
+
+        </ons-page>
+    </ons-template>
+
+<script>
+    function createNewMedicine() {
+
+        var medicine = {};
+            medicine.name = document.getElementById("input_medicine_name").value;
+            medicine.buy_freq = document.getElementById("input_medicine_buy_freq").value;
+            medicine.bought_time = document.getElementById("input_medicine_last_time_bought").value;
+            medicine.id = new Date().getTime();
+
+        storeMedicine(medicine);
+
+        menu.setMainPage('page1.html', {closeMenu: true})
+        alert("medicamento añadido")
+
+    }
+
+    function storeMedicine(medicine) {
+
+        addToLocalStorage("medicines", medicine)
+    }
+
+    function addToLocalStorage(id, value) {
+
+        var current_data_string = localStorage.getItem(id);
+        if (current_data_string != null) {
+            current_data = JSON.parse(current_data_string);
+            current_data.push(value)
+            localStorage.setItem(id, JSON.stringify(current_data));
+        } else {
+            localStorage.setItem(id, JSON.stringify([value]));
+        }
+    }
+
+</script>
+</body>
+</html>
